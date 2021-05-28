@@ -1,4 +1,6 @@
 from flask import render_template
+from flask import Flask
+app = Flask(__name__) 
 #наша новая функция сайта
 @app.route("/data_to")
 def data_to():
