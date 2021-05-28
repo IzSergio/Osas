@@ -5,7 +5,7 @@ from io import BytesIO
 import base64
 img_data = None
 # создаем путь к файлу (для кроссплатформенности, например)
-path = os.path.join('./static','image0008.png')
+path = os.path.join('./static','1-12.jpg')
 # читаем файл и енкодируем его в строку base64
 with open(path, 'rb') as fh:
  img_data = fh.read()
