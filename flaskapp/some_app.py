@@ -118,7 +118,6 @@ def apinet():
  neurodic = {}
  # проверяем что в запросе json данные
  if request.mimetype == 'application/json': 
-87
  # получаем json данные
  data = request.get_json()
  # берем содержимое по ключу, где хранится файл
