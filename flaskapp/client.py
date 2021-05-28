@@ -1,5 +1,6 @@
 # импортируем нужные модули
 import os
+import requests
 from io import BytesIO 
 import base64
 img_data = None
