@@ -1,6 +1,6 @@
 language: python
 python:
- - "3.9.5"
+ - "3.8.0"
 before_install:
  - chmod +x ./flaskapp/st.sh
 install:
