@@ -88,7 +88,7 @@ def net():
    neurodic[elem[0][1]] = elem[0][2]
  # передаем форму в шаблон, так же передаем имя файла и результат работы нейронной
  # сети если был нажат сабмит, либо передадим falsy значения
- return render_template('net.html',form=form,image_name=filename,neurodic=neurodic)
+ return render_template('template/net.html',form=form,image_name=filename,neurodic=neurodic)
 
 from flask import request
 from flask import Response
