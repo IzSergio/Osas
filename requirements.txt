@@ -5,8 +5,5 @@ Flask-Bootstrap==3.3.7.1
 Flask-WTF==0.15.1
 Pillow==8.2.0
 lxml==4.6.3
-numpy
-matplotlib
-seaborn
 tensorflow==2.2.1
 Keras==2.3.1
