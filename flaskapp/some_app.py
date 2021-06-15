@@ -70,15 +70,15 @@ def net():
  neurodic = {}
  # проверяем нажатие сабмит и валидацию введенных данных
  if form.validate_on_submit():
-  files = os.listdir('./static/img')
+  files = os.listdir('./static')
   for f in files:
-   os.remove('./static/img/'+f)
-  # файлы с изображениями читаются из каталога static/img
-  filename = os.path.join('./static/img', secure_filename(form.upload.data.filename))
+   os.remove('./static/'+f)
+  # файлы с изображениями читаются из каталога static
+  filename = os.path.join('./static', secure_filename(form.upload.data.filename))
   # сохраняем загруженный файл
   form.upload.data.save(filename)
   #print("FILENAME: ", filename)
-  fcount, fimage = neuronet.read_image_files(10,'./static/img')
+  fcount, fimage = neuronet.read_image_files(10,'./static')
   #print("FCOUNT ", fcount, " fimage ", fimage)
   # передаем все изображения в каталоге на классификацию
   # можете изменить немного код и передать только загруженный файл
