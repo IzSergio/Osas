@@ -115,18 +115,6 @@ def image(file_name)
     n = Image.fromarray(newarr)
     n.save(file_name)
     
-@app.route("/iz", methods=['GET', 'POST'])
-def iz():
-    form = NetForm()
-    filename = None
-    filename_graph=None
-    if form.validate_on_submit():
-        photo = form.upload.data.filename.split('.')[-1]
-        filename = os.path.join('./static', f'photo.{photo}')
-        filename_graph = os.path.join('./static', f'newgr.png')
-        form.upload.data.save(filename)
-        image(filename, form.verticale.data)
-    return render_template('iz.html', form=form, image_name=filename,filename_graph=filename_graph,)
 
 # метод для обработки запроса от пользователя
 @app.route("/apinet",methods=['GET', 'POST'])
