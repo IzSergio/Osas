@@ -98,7 +98,7 @@ def net():
  # сети если был нажат сабмит, либо передадим falsy значения
  return render_template('net.html',form=form,image_name=filename,neurodic=neurodic)
 
-def image(file_name, choice)
+def image(file_name)
     img = Image.open(p)
     img = img.convert("RGB")
     arr = np.array(img)
