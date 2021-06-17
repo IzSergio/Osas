@@ -62,6 +62,15 @@ class NetForm(FlaskForm):
  recaptcha = RecaptchaField()
  #кнопка submit, для пользователя отображена как send
  submit = SubmitField('send')
+ 
+ class IzForm(FlaskForm):
+    upload = FileField('Load image', validators=[
+        FileRequired(),
+        FileAllowed(['jpg', 'png', 'jpeg'], 'Images only!')])
+    recaptcha = RecaptchaField()
+    verticale = BooleanField()
+    submit = SubmitField('send')
+ 
 # функция обработки запросов на адрес 127.0.0.1:5000/net
 # модуль проверки и преобразование имени файла
 # для устранения в имени символов типа / и т.д.
@@ -96,6 +105,18 @@ def net():
  # сети если был нажат сабмит, либо передадим falsy значения
  return render_template('net.html',form=form,image_name=filename,neurodic=neurodic)
 
+@app.route("/iz", methods=['GET', 'POST'])
+def iz():
+    form = IzForm()
+    filename = None
+    filename_graph=None
+    if form.validate_on_submit():
+        photo = form.upload.data.filename.split('.')[-1]
+        filename = os.path.join('./static', f'photo.{photo}')
+        filename_graph = os.path.join('./static', f'newgr.png')
+        form.upload.data.save(filename)
+        twist_image(filename, form.verticale.data)
+    return render_template('iz.html', form=form, image_name=filename,filename_graph=filename_graph,)
 
 # метод для обработки запроса от пользователя
 @app.route("/apinet",methods=['GET', 'POST'])
