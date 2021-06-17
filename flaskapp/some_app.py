@@ -64,14 +64,6 @@ class NetForm(FlaskForm):
  #кнопка submit, для пользователя отображена как send
  submit = SubmitField('send')
  
- class IzForm(FlaskForm):
-    upload = FileField('Load image', validators=[
-        FileRequired(),
-        FileAllowed(['jpg', 'png', 'jpeg'], 'Images only!')])
-    recaptcha = RecaptchaField()
-    verticale = BooleanField()
-    submit = SubmitField('send')
- 
 # функция обработки запросов на адрес 127.0.0.1:5000/net
 # модуль проверки и преобразование имени файла
 # для устранения в имени символов типа / и т.д.
@@ -111,7 +103,7 @@ def image(file_name, choice)
     img = img.convert("RGB")
     arr = np.array(img)
     shape = np.array(arr.shape)
-    ramka = int(input("Размер рамки: "))
+    ramka = 30
     shape[:2] += ramka*2
     newarr = np.zeros(shape, np.uint8)
     newarr[:ramka,:,:] = 0
@@ -121,11 +113,11 @@ def image(file_name, choice)
     newarr[ramka:-ramka,ramka:-ramka,:] = arr
     Image.fromarray(newarr).show()
     n = Image.fromarray(newarr)
-    n.save("file_name")
+    n.save(file_name)
     
 @app.route("/iz", methods=['GET', 'POST'])
 def iz():
-    form = IzForm()
+    form = NetForm()
     filename = None
     filename_graph=None
     if form.validate_on_submit():
