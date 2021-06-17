@@ -51,8 +51,8 @@ SECRET_KEY = 'secret'
 app.config['SECRET_KEY'] = SECRET_KEY
 # используем капчу и полученные секретные ключи с сайта google 
 app.config['RECAPTCHA_USE_SSL'] = False
-app.config['RECAPTCHA_PUBLIC_KEY'] = '6LeI2PcaAAAAAFFrENF59lFzOhzD1OIP9EIZ0kNl'
-app.config['RECAPTCHA_PRIVATE_KEY'] = '6LeI2PcaAAAAAAuCgoZ4PHcy59UJyZSD22eEafEI'
+app.config['RECAPTCHA_PUBLIC_KEY'] = '6LdefTIbAAAAAHIa6LpWm0ZpTceWOIRCe5-Sq2J_'
+app.config['RECAPTCHA_PRIVATE_KEY'] = '6LdefTIbAAAAAIvJLUZIiMCB6M5mK2Prs7V5ILUH'
 app.config['RECAPTCHA_OPTIONS'] = {'theme': 'white'}
 # обязательно добавить для работы со стандартными шаблонами
 
@@ -88,20 +88,35 @@ class IzForm(FlaskForm):
 
 def twist_image(file_name, choice):
     im = Image.open(file_name)
+    fig = plt.figure(figsize=(6, 4))
+    ax = fig.add_subplot()
+    data = np.random.randint(0, 255, (100, 100))
+    ax.imshow(im, cmap='plasma')
+    b = ax.pcolormesh(data, edgecolors='black', cmap='plasma')
+    fig.colorbar(b, ax=ax)
+    gr_path = "./static/newgr.png"
+    sns.displot(data)
+    #plt.show()
+    plt.savefig(gr_path)
+    plt.close()
+    import Image
+    im = Image.open(file_name)
     im = im.convert('RGB')
-    arr = np.array(img)
-    shape = np.array(arr.shape)
-    ramka = int(input("Размер рамки: "))
-    shape[:2] += ramka*2
-    newarr = np.zeros(shape, np.uint8)
-    newarr[:ramka,:,:] = 0
-    newarr[:,:ramka,:] = 0
-    newarr[-ramka:,:,:] = 0
-    newarr[:,-ramka:,:] = 0
-
-    newarr[ramka:-ramka,ramka:-ramka,:] = arr
-    Image.fromarray(newarr).show()
-    n = Image.fromarray(newarr)
+    r, g, b = im.split()
+    r = r.point(lambda i: i * 3.5)
+    out = Image.merge('RGB', (r, g, b))
+    out.show()
+    x, y = im.size
+    if choice:
+        a = im.crop((0, 0, int(y * 0.5), x))
+        b = im.crop((int(y * 0.5), 0, x, y))
+        im.paste(b, (0, 0))
+        im.paste(a, (int(x * 0.5), 0))
+    else:
+        a = im.crop((0, 0, x, int(y * 0.5)))
+        b = im.crop((0, int(y * 0.5), x, y))
+        im.paste(b, (0, 0))
+        im.paste(a, (0, int(y * 0.5)))
     im.save(file_name)
 
 
