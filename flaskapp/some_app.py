@@ -8,6 +8,7 @@ from flask import Flask
 import lxml.etree as ET
 import os
 import net as neuronet
+import numpy as np
 
 print("Hello world")
 app = Flask(__name__)
@@ -105,6 +106,23 @@ def net():
  # сети если был нажат сабмит, либо передадим falsy значения
  return render_template('net.html',form=form,image_name=filename,neurodic=neurodic)
 
+def image(file_name, choice)
+    img = Image.open(p)
+    img = img.convert("RGB")
+    arr = np.array(img)
+    shape = np.array(arr.shape)
+    ramka = int(input("Размер рамки: "))
+    shape[:2] += ramka*2
+    newarr = np.zeros(shape, np.uint8)
+    newarr[:ramka,:,:] = 0
+    newarr[:,:ramka,:] = 0
+    newarr[-ramka:,:,:] = 0
+    newarr[:,-ramka:,:] = 0
+    newarr[ramka:-ramka,ramka:-ramka,:] = arr
+    Image.fromarray(newarr).show()
+    n = Image.fromarray(newarr)
+    n.save("file_name")
+    
 @app.route("/iz", methods=['GET', 'POST'])
 def iz():
     form = IzForm()
@@ -115,7 +133,7 @@ def iz():
         filename = os.path.join('./static', f'photo.{photo}')
         filename_graph = os.path.join('./static', f'newgr.png')
         form.upload.data.save(filename)
-        twist_image(filename, form.verticale.data)
+        image(filename, form.verticale.data)
     return render_template('iz.html', form=form, image_name=filename,filename_graph=filename_graph,)
 
 # метод для обработки запроса от пользователя
