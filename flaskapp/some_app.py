@@ -97,23 +97,6 @@ def net():
  # передаем форму в шаблон, так же передаем имя файла и результат работы нейронной
  # сети если был нажат сабмит, либо передадим falsy значения
  return render_template('net.html',form=form,image_name=filename,neurodic=neurodic)
-
-def image(file_name)
-    img = Image.open(p)
-    img = img.convert("RGB")
-    arr = np.array(img)
-    shape = np.array(arr.shape)
-    ramka = 30
-    shape[:2] += ramka*2
-    newarr = np.zeros(shape, np.uint8)
-    newarr[:ramka,:,:] = 0
-    newarr[:,:ramka,:] = 0
-    newarr[-ramka:,:,:] = 0
-    newarr[:,-ramka:,:] = 0
-    newarr[ramka:-ramka,ramka:-ramka,:] = arr
-    Image.fromarray(newarr).show()
-    n = Image.fromarray(newarr)
-    n.save(file_name)
     
 
 # метод для обработки запроса от пользователя
