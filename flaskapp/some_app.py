@@ -9,6 +9,7 @@ import lxml.etree as ET
 import os
 import net as neuronet
 import numpy as np
+from flask_bootstrap import Bootstrap
 
 print("Hello world")
 app = Flask(__name__)
@@ -45,20 +46,20 @@ app.config['RECAPTCHA_PUBLIC_KEY'] = '6LeI2PcaAAAAAFFrENF59lFzOhzD1OIP9EIZ0kNl'
 app.config['RECAPTCHA_PRIVATE_KEY'] = '6LeI2PcaAAAAAAuCgoZ4PHcy59UJyZSD22eEafEI'
 app.config['RECAPTCHA_OPTIONS'] = {'theme': 'white'}
 # обязательно добавить для работы со стандартными шаблонами
-from flask_bootstrap import Bootstrap
+
 bootstrap = Bootstrap(app)
 # создаем форму для загрузки файла
+
 class NetForm(FlaskForm):
  # поле для введения строки, валидируется наличием данных
  # валидатор проверяет введение данных после нажатия кнопки submit
  # и указывает пользователю ввести данные если они не введены
  # или неверны
- openid = StringField('Тут может находиться ваша реклама', validators = [DataRequired()])
+ 
+ number = DecimalField('Размер вашей рамки', validators=[InputRequired(), NumberRange(min=0, max=30, message='Разместите числа от 1 до 30')])
  # поле загрузки файла
  # здесь валидатор укажет ввести правильные файлы
- upload = FileField('Load image', validators=[
- FileRequired(),
- FileAllowed(['jpg', 'png', 'jpeg'], 'Images only!')])
+ upload = FileField('Load image', validators=[ FileRequired(), FileAllowed(['jpg', 'png', 'jpeg'], 'Images only!')])
  # поле формы с capture
  recaptcha = RecaptchaField()
  #кнопка submit, для пользователя отображена как send
@@ -98,7 +99,9 @@ def net():
  # сети если был нажат сабмит, либо передадим falsy значения
  return render_template('net.html',form=form,image_name=filename,neurodic=neurodic)
     
-
+def iz():
+ 
+ 
 # метод для обработки запроса от пользователя
 @app.route("/apinet",methods=['GET', 'POST'])
 def apinet():
