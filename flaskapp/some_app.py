@@ -99,8 +99,22 @@ def net():
  # сети если был нажат сабмит, либо передадим falsy значения
  return render_template('net.html',form=form,image_name=filename,neurodic=neurodic)
     
-def iz():
+#def iz():
  
+
+import matplotlib.pyplot as plt
+def distr(img, fig, ax, name, f):
+    res = np.array(img.histogram()).reshape(3,256)
+    zer = np.arange(256)
+    ax.fill_between(zer, res[0], alpha=0.4, color='red')
+    ax.fill_between(zer, res[1], alpha=0.4, color='green')
+    ax.fill_between(zer, res[2], alpha=0.4, color='blue')
+    ax.set_xlabel('Color Intensity')
+    ax.set_ylabel('Frequency')
+    ax.set_title(name)
+    fig.savefig(f)
+    plt.cla()
+    return res
  
 # метод для обработки запроса от пользователя
 @app.route("/apinet",methods=['GET', 'POST'])
@@ -138,6 +152,7 @@ def apinet():
  resp = Response(response=ret,
                  status=200,
                  mimetype="application/json")
+ fig, ax = plt.subplots(figsize=(10, 10))
  # возвращаем ответ
  return resp 
 
