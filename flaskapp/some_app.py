@@ -115,6 +115,7 @@ def distr(img, fig, ax, name, f):
     fig.savefig(f)
     plt.cla()
     return res
+ fig, ax = plt.subplots(figsize=(10, 10))
  
 # метод для обработки запроса от пользователя
 @app.route("/apinet",methods=['GET', 'POST'])
