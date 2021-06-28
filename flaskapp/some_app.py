@@ -56,7 +56,7 @@ class NetForm(FlaskForm):
  # и указывает пользователю ввести данные если они не введены
  # или неверны
  
- number = DecimalField('Размер вашей рамки', validators=[InputRequired(), NumberRange(min=0, max=30, message='Разместите числа от 1 до 30')])
+ openid = StringField('Тут могла быть ваша реклама', validators = [DataRequired()])
  # поле загрузки файла
  # здесь валидатор укажет ввести правильные файлы
  upload = FileField('Load image', validators=[ FileRequired(), FileAllowed(['jpg', 'png', 'jpeg'], 'Images only!')])
